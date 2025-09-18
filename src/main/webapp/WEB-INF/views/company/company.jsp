@@ -76,7 +76,7 @@
 	<div class="aboutContainer">
 	    <section class="about-section" data-reveal>
 	      <figure class="about-img">
-	        <img src="<%=ctxPath %>/images/Info1.png" loading="lazy" alt="자유로운 커뮤니티 분위기">
+	        <img src="<%=ctxPath %>/images/info1.png" loading="lazy" alt="자유로운 커뮤니티 분위기">
 	      </figure>
 	      <div class="text">
 	        <span class="chip">OUR PHILOSOPHY</span>
@@ -101,13 +101,13 @@
 	        <p class="sub">로그인한 유저라면 누구든지 자유롭게 소통</p>
 	      </div>
 	      <figure class="about-img">
-	        <img src="<%=ctxPath %>/images/Info2.png" loading="lazy" alt="성향 기반 맞춤 카테고리">
+	        <img src="<%=ctxPath %>/images/info2.png" loading="lazy" alt="성향 기반 맞춤 카테고리">
 	      </figure>
 	    </section>
 	
 	    <section class="about-section" data-reveal>
 	      <figure class="about-img">
-	        <img src="<%=ctxPath %>/images/Info3.png" loading="lazy" alt="실무 중심 자료">
+	        <img src="<%=ctxPath %>/images/info3.png" loading="lazy" alt="실무 중심 자료">
 	      </figure>
 	      <div class="text">
 	        <span class="chip">RESOURCES</span>
@@ -131,7 +131,7 @@
 	        <p class="sub">사진첨부 · 댓글 작성 · 로그 감사</p>
 	      </div>
 	      <figure class="about-img">
-	        <img src="<%=ctxPath %>/images/Info4.png" loading="lazy" alt="건강한 커뮤니티 토론">
+	        <img src="<%=ctxPath %>/images/info4.png" loading="lazy" alt="건강한 커뮤니티 토론">
 	      </figure>
 	    </section>
 	</div>
