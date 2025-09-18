@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	font-family:"Pretendard";
+	line-height: 1.2rem;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* CSS 초기화 끝  */
+
+#mycontainer	{ padding:20px; }
+#myheader		{ display: flex;position: relative; top: 60px;}
+#myheader .navbarTop { padding:0 1.5%;display:flex;justify-content:space-between;}
+#myheader .navbarTop #searchID { border-radius: 30px;border: 1px solid #ddd;padding: 3px 15px;position:relative;}
+#myheader .navbarTop #searchFrm .fa-search {position:absolute;right:20px;top:7px;}
+#myheader .navbarTop #searchFrm .btnSubmit {background-color: transparent;border: 0;position: absolute;right: 13px;top: 4px;width: 50px;height: 21px;}
+#myheader .navbarTop .logins {border-radius:30px;border:1px solid #ddd;padding:3px 15px;min-width:80px;margin-left:5.5%;}
+#myheader .navbar-nav {align-items:center;}
+#myheader .navbar-collapse {flex-grow:0;}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
+    font-weight: 100;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff') format('woff');
+    font-weight: 900;
+    font-display: swap;
+}
+
+
+header {background: cadetblue;padding: 10px 20px;display: flex;align-items: center;justify-content: space-between;top:0;left:0;width:100%;position:fixed;z-index:10;}
+h1 {margin: 0;color: white;font-size: 1.5rem;}
+h1 a {color: white;text-decoration: none;}
+
+/* 메뉴 토글 버튼 */
+#menuToggle { font-size: 2rem;background: none;border: none;color: white;cursor: pointer;display: none; /* 기본엔 숨김 */}
+#mainNav ul { list-style: none;margin: 0;padding: 0;display: flex;align-items:center;}
+#mainNav ul li {margin-left: 1rem;}
+#mainNav ul li a {color: white;text-decoration: none;padding: 0.5rem 1rem;font-weight: bold;display: block;}
+#mainNav ul li:hover a {color:blue;}
+  
+.mainUl {display:flex;align-items:center;}
+.menuBox {display:flex;align-items:center;justify-content:space-between;}
+
+#searchFrm #searchID {position:relative;border-radius:30px;border:1px solid #ddd;text-indent:13px;}
+#searchFrm #searchID::placeholder {text-indent:13px;font-size:11pt;}
+#searchFrm #searchIco {position:absolute;right:15px;top:8px;}
+#searchFrm .btnSubmit {position:absolute;right:10px;top:1px;display:block;width:100%;max-width:30px;height:100%;background-color:transparent;border:0;}
+
+.hotTitle {font-size:1.6rem;line-height:2rem;}
+.ListHeight {min-height:900px;}
+.LBoardRank {margin-top:30%;}
+.page-btn {font-size:1.35rem;margin:0 5px;}
+.page-btn.active {color:#000; font-weight:600;}
+  
+@media screen and (max-width:1250px) {
+	#mycontent	{ min-height: initial; }
+}
+
+  /* 모바일 대응 시작 */
+@media (max-width: 768px) {
+  #menuToggle {display: block; /* 모바일에선 버튼 보이기! */}
+  .ListHeight {min-height:initial;}
+  nav {position: absolute;top: 70px; left: 0; width: 100%; background: cadetblue;display: none; flex-direction: column;}
+  nav ul { flex-direction: column;}
+  nav ul li {margin-left: 0; border-top: 1px solid rgba(255,255,255,0.3);} 
+  nav ul li a {padding: 1rem;}
+  nav.show {display: flex !important;}
+  #myfooter { display: flex; min-height:120px; position: relative; top:60px; background-color:#555555; margin-bottom: 70px;}
+  #myheader a {text-decoration:none;}
+  .LBoardRank {margin-top:4%;margin-bottom:4%;}
+  #mycontent {padding:0;}
+  
+
+} /* end of /* 모바일 대응 끝 */

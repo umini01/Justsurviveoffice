@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commentLike">
+
+	<!-- 댓글 좋아요 여부 확인 -->
+    <select id="iscommentLiked" parameterType="map" resultType="int">
+        select count(*)
+        from commentLike cl
+        join comments c on cl.fk_commentNo = c.commentNo
+        where cl.fk_id = #{fk_id}
+          and cl.fk_commentNo = #{commentNo}
+          and c.parentNo is null     
+    </select>
+
+  <!--  댓글좋아요 추가 -->
+    <insert id="insertCommentLike" parameterType="map">
+        insert into commentLike (fk_id, fk_commentNo)
+        values (
+ 			#{fk_id, jdbcType=VARCHAR},
+            #{commentNo, jdbcType=NUMERIC}    
+             )
+    </insert>
+
+
+    <!-- 댓글좋아요 삭제 -->
+    <delete id="deleteCommentLike" parameterType="map">
+        delete from commentLike
+        where fk_id = #{fk_id, jdbcType=VARCHAR}
+          and fk_commentNo = #{commentNo, jdbcType=NUMERIC}
+    </delete>
+
+
+    <!-- 댓글좋아요 개수 -->
+    <select id="getCommentLikeCount" parameterType="long" resultType="int">
+        select count(*)
+        from commentLike cl
+        join comments c on cl.fk_commentNo = c.commentNo
+        where cl.fk_commentNo = #{commentNo}
+        and c.parentNo is null
+    </select>
+
+<!-- 대댓글 -->
+	
+	<!-- 대댓글 좋아요 여부 확인 -->
+    <select id="isreplyLiked" parameterType="map" resultType="int">
+        select count(*)
+        from commentLike cl
+        join comments c on cl.fk_commentNo = c.commentNo
+        where cl.fk_id = #{fk_id}
+          and cl.fk_commentNo = #{commentNo}
+          and c.parentNo is not null
+    </select>
+
+  <!--  대댓글 좋아요 추가 -->
+    <insert id="insertReplyLike" parameterType="map">
+        insert into commentLike (fk_id, fk_commentNo)
+        values (
+ 			#{fk_id, jdbcType=VARCHAR},
+            #{commentNo, jdbcType=NUMERIC}    
+             )
+    </insert>
+
+
+    <!-- 대댓글 좋아요 삭제 -->
+    <delete id="deleteReplyLike" parameterType="map">
+        delete from commentLike
+        where fk_id = #{fk_id, jdbcType=VARCHAR}
+          and fk_commentNo = #{commentNo, jdbcType=NUMERIC}
+    </delete>
+
+
+    <!-- 대댓글 좋아요 개수 -->
+    <select id="getReplyLikeCount" parameterType="long" resultType="int">
+        select count(*)
+        from commentLike cl
+        join comments c on cl.fk_commentNo = c.commentNo
+        where cl.fk_commentNo = #{commentNo}
+        and c.parentNo is not null
+    </select>
+    
+    
+</mapper>

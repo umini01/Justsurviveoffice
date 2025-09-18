@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+
+<!-- <mapper namespace="springScheduler_jso"> -->
+<mapper namespace="com.spring.app.springscheduler.model.SpringSchedulerMapper_final_orauser">
+	
+	
+	<!-- 기존 보드 랭킹 테이블안에 내용 비워주기 -->
+	<delete id="deleteFromRank">
+		delete from BOARD_RANKING_WEEKLY
+	</delete>
+	
+	
+	<!-- 보드 랭킹 테이블에 새로운 데이터 넣기 -->
+	<insert id="insertGetTopBoardsByViewCount">
+		insert into BOARD_RANKING_WEEKLY(RANK_TYPE, RANK_NO, FK_BOARDNO)
+		select 'VIEWS' AS rankType, rankNo, boardNo
+		from(
+		     select ROWNUM as rankNo, boardNo, boardName, FK_CATEGORYNO, readCount
+			 from (
+			       select boardNo, boardName, FK_CATEGORYNO, readCount
+			       from BOARD
+			       where CREATEDATBOARD &gt;= SYSDATE - 30 and BOARDDELETED = 0
+			       order by readCount desc, CREATEDATBOARD desc
+			      )
+			)
+		WHERE rankNo &lt;= 5
+	</insert>
+	
+	
+	<!-- 보드 랭킹 테이블에 댓글순 기준 새로운 데이터 넣기 -->
+	<insert id="insertGetTopBoardsByCommentCount">
+		insert into BOARD_RANKING_WEEKLY(RANK_TYPE, RANK_NO, FK_BOARDNO)
+		select 'COMMENTS' AS RANK_TYPE,
+			   RANK_NO,
+			   BOARDNO
+		from (select B.BOARDNO, 
+					 B.BOARDNAME,
+					 nvl(C.COMMENTCOUNT, 0) AS COMMENTCOUNT,
+					 row_number() over(order by nvl(C.COMMENTCOUNT, 0) desc, B.CREATEDATBOARD) AS RANK_NO,
+					 FK_CATEGORYNO
+			  from board B
+			  left join (select FK_BOARDNO, count(*) AS COMMENTCOUNT
+			  			 from comments
+			  			 group by FK_BOARDNO) C
+			  on B.BOARDNO = C.FK_BOARDNO
+			  where B.BOARDDELETED = 0 and B.CREATEDATBOARD &gt;= SYSDATE - 30
+			  )
+		where RANK_NO &lt;= 5
+	</insert>
+	
+	
+	<!-- 랭킹 테이블에 데이터 있는지 검사 -->
+	<select id="selectRankBoard">
+		select count(*)
+		from BOARD_RANKING_WEEKLY
+	</select>
+	
+	
+	<!-- KEYWORD_RANKING 테이블 데이터 전부 제거 -->
+	<delete id="deleteFromKeyword">
+		delete from KEYWORD_RANKING
+	</delete>
+	
+	
+	<!-- 보드 테이블에서 제목과 내용, 카테고리번호 가져오기(DB) -->
+	<resultMap type="HashMap" id="getgetBoardContents_map">
+		<result property="fk_categoryNo" column="fk_categoryNo" javaType="Long" />
+		<result property="boardName" column="boardName" javaType="String" />
+		<result property="boardContent" column="boardContent" javaType="String" />
+	</resultMap>
+	<select id="getgetBoardContents" parameterType="Integer" resultMap="getgetBoardContents_map">
+		select fk_categoryNo, boardName, boardContent
+		from board
+		where boardDeleted = 0 and createdAtBoard &gt;= SYSDATE - 30
+		and fk_categoryNo = #{category}
+	</select>
+	
+	
+	<!-- 키워드테이블에 데이터 넣어주기 -->
+	<insert id="insertGetKeyWord" parameterType="java.util.List">	<!-- 파라미터는 생략가능하다 자동으로 list 해줌 -->
+		insert into KEYWORD_RANKING(KEYWORD, SCORE, FK_CATEGORYNO)
+		select * from (
+						<foreach collection="list" item="item" separator=" UNION ALL ">
+						SELECT #{item.keyWord} AS KEYWORD,
+							   #{item.keyCount, jdbcType=VARCHAR} AS SCORE,
+							   #{item.fk_categoryNo, jdbcType=NUMERIC} AS FK_CATEGORYNO
+						FROM dual
+						</foreach>
+					  )
+	</insert>
+	
+	
+	<!-- 키워드 테이블에 데이터 있는지 검사 -->
+	<select id="selectRank" resultType="Integer">
+		select count(*)
+		from KEYWORD_RANKING
+	</select>
+	
+	
+</mapper>
+
+
+
+

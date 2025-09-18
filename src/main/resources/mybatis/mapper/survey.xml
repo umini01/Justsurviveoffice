@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+
+<mapper namespace="com.spring.app.survey.model.SurveyDAO">
+	
+	
+	<resultMap type="HashMap" id="surveyStart_map">
+		<result property="questionNo" 		column="questionNo" 		javaType="String" />
+		<result property="questionContent" 	column="questionContent" 	javaType="String" />
+		<result property="optionNo" 		column="optionNo" 			javaType="String" />
+		<result property="optionText" 		column="optionText" 		javaType="String" />
+	</resultMap>
+	<select id="surveyStart" resultMap="surveyStart_map">
+		SELECT questionNo, questionContent, optionNo, optionText
+		FROM question Q JOIN options O
+		ON Q.questionNo = O.fk_questionNo
+		ORDER BY questionNo, fk_categoryNo
+	</select>
+	
+	
+	<!-- 해당 카테고리의 유형 정보 가져오기 -->
+	<select id="selectCategory" parameterType="String" resultType="CategoryDTO">
+		select categoryNo, categoryName, categoryImagePath,
+      		   LISTAGG(tagName, ',') WITHIN GROUP (ORDER BY tagNo) AS tags 
+      		   from category C join tag T 
+      		   on C.categoryNo = T.fk_categoryNo 
+      		   where categoryNo = to_number(#{categoryNo}) 
+      		   group by (categoryNo, categoryName, categoryImagePath)
+	</select>
+	
+	
+</mapper>
+
+
+
+

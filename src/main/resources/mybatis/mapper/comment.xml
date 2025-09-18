@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comments">
+
+    <!-- 댓글 작성 -->
+    <insert id="insertComment" parameterType="com.spring.app.comment.domain.CommentDTO">
+    insert into comments (
+        commentNo, 
+        fk_boardNo, 
+        fk_id, 
+        fk_name, 
+        content, 
+        createdAtComment
+    )
+    values (
+        comment_seq.NEXTVAL,
+        #{fk_boardNo, jdbcType=NUMERIC},
+        #{fk_id},
+        #{fk_name},
+        #{content},
+        SYSDATE
+    )
+	</insert>
+
+    <!-- 댓글 목록 조회 -->
+    <!--<select id="getCommentsByBoardNo" parameterType="long"
+        resultType="com.spring.app.comment.domain.CommentDTO">
+    select *
+    from comments
+    where fk_boardNo = #{fk_boardNo, jdbcType=NUMERIC}
+    and parentNo is NULL
+    order by commentNo asc
+	</select>-->
+
+<!-- 댓글 목록 조회 -->
+<select id="getCommentsByBoardNo" parameterType="long"
+        resultType="com.spring.app.comment.domain.CommentDTO">
+    select
+        c.commentNo,
+        c.fk_boardNo,
+        c.fk_id,
+        c.fk_name,
+        c.content,
+        c.parentNo,
+        TO_CHAR(c.createdAtComment, 'YYYY-MM-DD HH24:MI:SS') AS createdAtComment,
+        TO_CHAR(c.updatedAtComment, 'YYYY-MM-DD HH24:MI:SS') AS updatedAtComment,
+        NVL(commentlike.like_count, 0) AS likeCount,
+        NVL(commentdislike.dislike_count, 0) AS dislikeCount
+    from comments c
+    LEFT JOIN (
+        select fk_commentNo, count(*) AS like_count
+        from commentlike
+        group by fk_commentNo
+    ) commentlike ON c.commentNo = commentlike.fk_commentNo
+    LEFT JOIN (
+        select fk_commentNo, count(*) AS dislike_count
+        from commentdislike
+        group by fk_commentNo
+    ) commentdislike on c.commentNo = commentdislike.fk_commentNo
+    where c.fk_boardNo = #{fk_boardNo, jdbcType=NUMERIC}
+      and c.parentNo is null
+    order by c.commentNo asc
+</select>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="map">
+        delete from comments
+        where commentNo = #{commentNo}
+    </delete>
+
+ <!-- 댓글 수정 -->
+    <update id="updateComment" parameterType="map">
+        update comments
+        set content = #{content},
+            updatedAtComment = SYSDATE
+        where commentNo = #{commentNo}
+        and fk_id = #{fk_id}
+    </update>
+
+   <!-- 대댓글 작성 -->
+	<insert id="insertReply" parameterType="com.spring.app.comment.domain.CommentDTO">
+    <selectKey keyProperty="commentNo" resultType="long" order="BEFORE">
+        SELECT comment_seq.nextval FROM dual
+    </selectKey>
+    
+    INSERT INTO comments (
+        commentNo,
+        fk_boardNo,
+        fk_id,
+        fk_name,
+        content,
+        parentNo,
+        createdAtComment
+    ) VALUES (
+        #{commentNo},
+        #{fk_boardNo},
+        #{fk_id},
+        #{fk_name},
+        #{content},
+        #{parentNo, jdbcType=NUMERIC},
+        sysdate
+    )
+</insert>
+	   
+	<!-- 대댓글 삭제 -->
+	<delete id="deleteReply" parameterType="long">
+	    delete from comments
+    	where commentNo = #{commentNo}
+	</delete>
+	
+	<!-- 특정 댓글의 대댓글 리스트 조회 -->
+	<select id="getRepliesByParentNo" parameterType="long"
+	        resultType="com.spring.app.comment.domain.CommentDTO">
+	    select *
+	    from comments
+	    where parentNo = #{parentNo}
+	    order by createdAtComment asc
+	</select>
+	
+	
+	<select id="getReplyById" parameterType="long" resultType="com.spring.app.comment.domain.CommentDTO">
+    select
+        commentNo,
+        fk_boardNo,
+        fk_id,
+        fk_name,
+        content,
+        parentNo,
+        to_char(createdAtComment, 'YYYY-MM-DD HH24:MI:SS') AS createdAtComment
+    from comments
+    where commentNo = #{commentNo, jdbcType=NUMERIC}
+	</select>
+		
+   <select id="getCreatedAtCommentCnt" parameterType="String" resultType="Int">
+  		select count(*) from comments
+		where fk_id = #{id} and (sysdate - createdAtComment) &lt;= 1
+  	</select>
+
+</mapper>

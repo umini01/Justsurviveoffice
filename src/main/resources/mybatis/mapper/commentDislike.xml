@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commentDislike">
+
+	<!-- 댓글 싫어요 여부 확인 -->
+    <select id="iscommentDisliked" parameterType="map" resultType="int">
+        select count(*)
+        from commentDislike cd
+        join comments c on cd.fk_commentNo = c.commentNo
+        where cd.fk_id = #{fk_id}
+          and cd.fk_commentNo = #{commentNo}
+          and c.parentNo is null
+    </select>
+
+  <!--  댓글 싫어요 추가 -->
+    <insert id="insertCommentDislike" parameterType="map">
+        insert into commentDislike (fk_id, fk_commentNo)
+        values (
+ 			#{fk_id, jdbcType=VARCHAR},
+            #{commentNo, jdbcType=NUMERIC}    
+             )
+    </insert>
+
+
+    <!-- 댓글 싫어요 삭제 -->
+    <delete id="deleteCommentDislike" parameterType="map">
+        delete from commentDislike
+        where fk_id = #{fk_id, jdbcType=VARCHAR}
+          and fk_commentNo = #{commentNo, jdbcType=NUMERIC}
+    </delete>
+
+
+    <!-- 댓글 싫어요 개수 -->
+    <select id="getCommentDislikeCount" parameterType="long" resultType="int">
+        select count(*)
+        from commentDislike cd
+        join comments c on cd.fk_commentNo = c.commentNo
+        where cd.fk_commentNo = #{commentNo}
+        and c.parentNo is null
+        	
+        
+    </select>
+    
+    <!-- 대댓글 -->
+    
+    <!-- 대댓글 싫어요 여부 확인 -->
+    <select id="isreplyDisliked" parameterType="map" resultType="int">
+        select count(*)
+        from commentDislike cd
+        join comments c on cd.fk_commentNo = c.commentNo
+        where cd.fk_id = #{fk_id}
+          and cd.fk_commentNo = #{commentNo}
+         and c.parentNo is not null
+    </select>
+
+  <!--  대댓글 싫어요 추가 -->
+    <insert id="insertReplyDislike" parameterType="map">
+        insert into commentDislike (fk_id, fk_commentNo)
+        values (
+ 			#{fk_id, jdbcType=VARCHAR},
+            #{commentNo, jdbcType=NUMERIC}    
+             )
+    </insert>
+
+
+    <!-- 대댓글 싫어요 삭제 -->
+    <delete id="deleteReplyDislike" parameterType="map">
+        delete from commentDislike
+        where fk_id = #{fk_id, jdbcType=VARCHAR}
+          and fk_commentNo = #{commentNo, jdbcType=NUMERIC}
+    </delete>
+
+
+    <!-- 대댓글 싫어요 개수 -->
+    <select id="getReplyDislikeCount" parameterType="long" resultType="int">
+        select count(*)
+        from commentDislike cd
+        join comments c on cd.fk_commentNo = c.commentNo
+        where cd.fk_commentNo = #{commentNo}
+        and c.parentNo is not null
+    </select>
+    
+</mapper>

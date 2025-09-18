@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="pointLog">
+	
+	
+	<insert id="addPointLogBoard" parameterType="HashMap">
+		insert into pointLog(pointLogNo, fk_id, points, pointType)
+		values(pointLog_seq.nextval, #{id}, to_number(${point}), 'BOARD')
+	</insert>
+	
+	<insert id="addPointLogComment" parameterType="HashMap">
+		insert into pointLog(pointLogNo, fk_id, points, pointType)
+		values(pointLog_seq.nextval, #{id}, to_number(${point}), 'COMMENT')
+	</insert>
+	
+	<select id="getCreatedAtLogBoardCnt" parameterType="String" resultType="Int">
+		select count(*)
+		from pointLog
+		where fk_id = #{id} and pointType = 'BOARD'
+							   and (sysdate - createdAtLog) &lt;= 1
+	</select>
+
+	<select id="getCreatedAtLogCommentCnt" parameterType="String" resultType="Int">
+		select count(*)
+		from pointLog
+		where fk_id = #{id} and pointType = 'COMMENT'
+							   and (sysdate - createdAtLog) &lt;= 1
+	</select>
+
+
+</mapper>
