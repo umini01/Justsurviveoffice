@@ -75,7 +75,7 @@ spring: # 주의할 점은 내용작성시 들여쓰기 내어쓰기시 공백�
 
   data: #=== (몽고DB) === 
     mongodb:
-      uri: mongodb://devuser:qwer1234$@127.0.0.1:27017/mydb
+      uri: mongodb://devuser:qwer1234$@3.34.183.137:27017/mydb
       
   messages: #메시지(파일이 여러개일 경우 ,로 구분)
     basename: messages.validation
