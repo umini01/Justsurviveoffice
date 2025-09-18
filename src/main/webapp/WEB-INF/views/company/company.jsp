@@ -64,7 +64,6 @@
     .about-section .text p{font-size:1rem;}
   }
 </style>
-<<<<<<< HEAD
 
   <!-- Hero -->
   <div class="companyTop">

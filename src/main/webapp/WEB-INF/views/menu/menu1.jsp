@@ -21,7 +21,7 @@
     // serverIP : 192.168.0.219
     
     // String serverIP = "192.168.10.213";
- 	String serverIP = "13.209.96.17"; 
+ 	String serverIP = "3.34.183.137"; 
     // 자신의 EC2 퍼블릭 IPv4 주소임. // 아마존(AWS)에 배포를 하기 위한 것임. 
     // 만약에 사용중인 IP주소가 고정IP 이라면 IP주소를 직접입력해주면 된다. 
     

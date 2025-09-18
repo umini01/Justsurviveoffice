@@ -46,7 +46,7 @@ spring: # 주의할 점은 내용작성시 들여쓰기 내어쓰기시 공백�
 
   datasource-finalorauser2:
     driver-class-name: oracle.jdbc.OracleDriver
-    jdbc-url: jdbc:oracle:thin:@127.0.0.1:1521/xe
+    jdbc-url: jdbc:oracle:thin:@3.34.183.137:1521/xe
     username: final_orauser2
     password: seven
     type: com.zaxxer.hikari.HikariDataSource
