@@ -79,7 +79,7 @@
 </script>
 
 <header style="opacity: 0.8; background-color:#A4B1DE; display: flex;">
-  <h1><a href="<%=ctxPath%>/index" style="color: white;text-decoration: none;background-image: url(/justsurviveoffice/images/logo2.png);width: 173px;height: 50px;display: block;background-size: cover;background-repeat: no-repeat;background-position: center;"></a></h1>
+  <h1><a href="<%=ctxPath%>/index" style="color: white;text-decoration: none;background-image: url('<%= ctxPath%>/images/logo2.png');width: 173px;height: 50px;display: block;background-size: cover;background-repeat: no-repeat;background-position: center;"></a></h1>
 
   <button id="menuToggle" aria-label="메뉴 토글" aria-expanded="false">&#9776;</button>
 
