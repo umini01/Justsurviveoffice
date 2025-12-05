@@ -46,7 +46,7 @@ spring: # 주의할 점은 내용작성시 들여쓰기 내어쓰기시 공백�
 
   datasource-finalorauser2:
     driver-class-name: oracle.jdbc.OracleDriver
-    jdbc-url: jdbc:oracle:thin:@13.209.89.119:1521/xe
+    jdbc-url: jdbc:oracle:thin:@3.38.134.68:1521/xe
     username: final_orauser2
     password: seven
     type: com.zaxxer.hikari.HikariDataSource
@@ -75,7 +75,7 @@ spring: # 주의할 점은 내용작성시 들여쓰기 내어쓰기시 공백�
 
   data: #=== (몽고DB) === 
     mongodb:
-      uri: mongodb://devuser:qwer1234$@13.209.89.119:27017/mydb
+      uri: mongodb://devuser:qwer1234$@3.38.134.68:27017/mydb
       
   messages: #메시지(파일이 여러개일 경우 ,로 구분)
     basename: messages.validation
