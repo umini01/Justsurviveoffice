@@ -46,7 +46,7 @@ jobs:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
       # 등록 => 서버키가 등록 
       - name: Add known hosts
-        run: ssh-keyscan -t ed25519 13.209.89.119 >> ~/.ssh/known_hosts
+        run: ssh-keyscan -t ed25519 3.38.134.68 >> ~/.ssh/known_hosts
       # 실행 
       # container명 => 같으면 안된다 
       # 1. 정지 docker stop image명
@@ -55,7 +55,7 @@ jobs:
       # 4. 실행명령 : run 
       - name: Deploy on server using DockerHub image
         run: |
-          ssh ubuntu@13.209.89.119 << 'EOF'
+          ssh ubuntu@3.38.134.68 << 'EOF'
             docker stop spring-app || true
             docker rm spring-app || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest
