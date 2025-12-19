@@ -15,6 +15,7 @@
    <%-- Required meta tags --%>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="icon" type="image/png" sizes="32x32" href="<%= ctxPath%>/images/logo2.png">
    <title>대사살 (대충사무실에서살아남기)</title>
 
     <%-- Bootstrap CSS --%>
